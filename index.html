@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Project Blog</title>
+</head>
+
+<body>
+<h1>Project Blog</h1>
+<div>
+  <form>
+    <textarea id="userinput" placeholder="Write Post"></textarea>
+    <button type="button" onClick="post()">Submit</button>
+  </form>
+</div>
+<div id="posts"></div>
+<script>
+var uniqueid = 1;
+function post(){
+	"use strict";
+	//get user input
+	var userInput = document.getElementById("userinput").value;
+	//if there is a user input
+	if(userInput != ''){
+		//post user input
+		$("#posts").prepend(
+			"<div class='post'><h4>Post No." + uniqueid + "</h4>" +
+			"<p id='" + uniqueid + "'>" + userInput + "</p>" +
+			"</div>");
+		//reset input form
+		document.getElementById("userinput").value = "";
+		uniqueid++;
+	}else{
+		alert("please write a blog post");
+	}
+	
+	
+}
+	</script>
+</body>
+</html>
