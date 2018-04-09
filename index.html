@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Project Blog</title>
 </head>
 
@@ -20,17 +19,22 @@ var uniqueid = 1;
 function post(){
 	"use strict";
 	//get user input
-	var userInput = document.getElementById("userinput").value;
+	var userInput = document.getElementById("userinput");
 	//if there is a user input
-	if(userInput != ''){
-		//post user input
-		$("#posts").prepend(
-			"<div class='post'><h4>Post No." + uniqueid + "</h4>" +
-			"<p id='" + uniqueid + "'>" + userInput + "</p>" +
-			"</div>");
+	if(userInput.value != ''){	
+		
+		//make a new element
+		var newInput = document.createElement("div");
+		//give element
+		newInput.innerHTML = "<h4>Post No." + uniqueid + "</h4>" + 
+			"<p id='" + uniqueid + "'>" + userInput.value + "</p>";
+		//prepend
+		var oldPosts = document.getElementById('posts');
+		oldPosts.insertBefore(newInput, oldPosts.firstChild);
 		//reset input form
-		document.getElementById("userinput").value = "";
+		userInput.value = "";
 		uniqueid++;
+		
 	}else{
 		alert("please write a blog post");
 	}
