@@ -6,28 +6,33 @@ import Form from './components/Form';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       userinput: '',
-      posts: [
-        {
-          id: 1,
-          content: 'hello'
-        },
-        {
-          id: 2,
-          content: 'wow'
-        }
-
-    ],
+      posts: [],
     currentContent: '',
+    id: 1,
     }
 
   }
   handleChange(event) {
-    this.setState({currentContent: event.target.value});
+    
+    this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
     event.preventDefault();
+
+    const newInput = {
+      id: this.state.id,
+      content: this.state.currentContent,
+    }
+    this.state.posts.push(newInput);
+    this.setState({
+      id: (this.state.id + 1),
+      currentContent: ''
+    });
+   // this.setState(this.state);
   }
 
   render() {
@@ -35,8 +40,8 @@ class App extends Component {
       <div className="App">
         <Form 
           currentContent={this.state.currentContent}
-          handleChange={this.state.handleChange}
-          handleSubmit={this.state.handleSubmit}
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
         />
         <Posts posts={this.state.posts} />
       </div>

@@ -1,24 +1,30 @@
 import React from 'react';
 
 class Form extends React.Component{
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+    }
 
     handleChange(event) {
-        this.props.handleChange(event);
+        this.props.onChange(event);
     }
     handleSubmit(event) {
-        this.props.handleSubmit(event);
+        this.props.onSubmit(event);
     }
     render(){
 
         return (
-            <Form onSubmit={this.props.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
             <textarea
-                name="currentPost"
+                name="currentContent"
                 value={this.props.currentContent}
-                onChange={this.props.handleChange}
+                onChange={this.handleChange}
             />
             <div><input type="submit" value="Post" /></div>
-            </Form>
+            </form>
         )
     }
 }
