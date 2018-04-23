@@ -17,14 +17,22 @@ class Form extends React.Component{
     render(){
 
         return (
-            <form onSubmit={this.handleSubmit}>
-            <textarea
-                name="currentContent"
-                value={this.props.currentContent}
-                onChange={this.handleChange}
-            />
-            <div><input type="submit" value="Post" /></div>
-            </form>
+            <div className="row">
+                <div className='input-field'>
+                    <form onSubmit={this.handleSubmit} className="col s10">
+                         <textarea
+                            className="materialize-textarea validate"
+                            name="currentContent"
+                            value={this.props.currentContent}
+                            onChange={this.handleChange}
+                        />
+                        <div className="input-field col s3">
+                            <button className="btn-large waves-effect"
+                                type="submit" name="Post">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         )
     }
 }
