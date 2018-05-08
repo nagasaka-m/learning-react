@@ -6,6 +6,15 @@ import Header from './components/Header';
 import firebase from 'firebase';
 import _ from 'lodash';
 
+function getCurrentDate(){
+  var today = new Date();
+  var d = today.getDate();
+  var m = today.getMonth() + 1;
+  var y = today.getFullYear();
+  var h = today.getHours();
+  var min = today.getMinutes();
+  return y + ' ' + m + '.' + d + ' ' + h + ':' + min;
+}
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +49,8 @@ class App extends Component {
 
         const store = _.map(fbstore, (value, id) => {
           return {
-            id: value.id,
+            id: id,
+            date: value.date,
             content: value.content,
           };
         });
@@ -62,6 +72,7 @@ class App extends Component {
 
     const newInput = {
       id: this.state.id,
+      date: getCurrentDate(),
       content: this.state.currentContent,
     };
 
@@ -69,7 +80,7 @@ class App extends Component {
 
     this.setState({
       currentContent: '',
-      id: (this.state.id + 1),
+      //id: (this.state.id + 1),
     });
   }else{
     alert("write a post");
