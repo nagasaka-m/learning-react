@@ -56,7 +56,7 @@ class App extends Component {
         });
         //setstate
         this.setState({
-          posts: store,
+          posts: store.reverse(),
         });
       });
 

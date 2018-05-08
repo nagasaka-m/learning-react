@@ -3,7 +3,7 @@ import Post from './Post';
 
 class Posts extends React.Component{
     createPosts(){
-        return this.props.posts.reverse().map(item =>
+        return this.props.posts.map(item =>
             <Post
                 key={item.id}
                 post={item}
