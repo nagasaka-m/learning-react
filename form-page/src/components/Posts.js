@@ -11,6 +11,11 @@ class Posts extends React.Component{
         );
     }
 
+    shouldComponentUpdate(nextProps) {
+        return (nextProps.posts.length !== this.props.posts.length);
+    }
+
+
     render(){
         return (
             <div>

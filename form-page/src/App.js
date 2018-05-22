@@ -22,10 +22,9 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      userinput: '',
       posts: [],
-    currentContent: '',
-    id: 1,
+      currentContent: '',
+      id: 1,
     }
 
   }
@@ -40,8 +39,11 @@ class App extends Component {
         messagingSenderId: "514646431420"
 
     })
+  }
 
-    //create database
+  
+  componentDidMount(){
+ //create database
     firebase.database().ref('/posts')
     //get data from database as an js object
       .on('value', snapshot => {
@@ -61,7 +63,10 @@ class App extends Component {
       });
 
   }
-
+  shouldComponentUpdate(nextStates) {
+    return (nextStates.currentContent !== this.state.currentContent
+         || nextStates.posts.length !== this.state.posts.length);
+  }
 
   handleChange(event) {
     
@@ -70,14 +75,15 @@ class App extends Component {
   handleSubmit(event) {
     if( this.state.currentContent !== ''){
 
+   
     const newInput = {
-      id: this.state.id,
+      id: this.state.id ,
       date: getCurrentDate(),
       content: this.state.currentContent,
     };
 
     firebase.database().ref('/posts').push(newInput, response => response);
-
+  
     this.setState({
       currentContent: '',
       //id: (this.state.id + 1),
