@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post';
 
-class Posts extends React.Component{
+class Posts extends React.PureComponent{
     createPosts(){
         return this.props.posts.map(item =>
             <Post
@@ -11,10 +11,11 @@ class Posts extends React.Component{
         );
     }
 
+    /*
     shouldComponentUpdate(nextProps) {
         return (nextProps.posts.length !== this.props.posts.length);
     }
-
+*/
 
     render(){
         return (

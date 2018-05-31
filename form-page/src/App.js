@@ -3,7 +3,10 @@ import './App.css';
 import Posts from './components/Posts';
 import Form from './components/Form';
 import Header from './components/Header';
-import firebase from 'firebase';
+//import firebase from 'firebase';
+import firebase from 'firebase/app';
+import database from 'firebase/database';
+
 import _ from 'lodash';
 
 function getCurrentDate(){
@@ -16,7 +19,7 @@ function getCurrentDate(){
   return y + ' ' + m + '.' + d + ' ' + h + ':' + min;
 }
 
-class App extends Component {
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -45,13 +48,14 @@ class App extends Component {
   componentDidMount(){
  //create database
     firebase.database().ref('/posts')
+    //database().ref('/posts')
     //get data from database as an js object
+    //.on updates us when new value gets added to database
       .on('value', snapshot => {
           const fbstore = snapshot.val();
 
         const store = _.map(fbstore, (value, id) => {
           return {
-            id: id,
             date: value.date,
             content: value.content,
           };
@@ -63,10 +67,11 @@ class App extends Component {
       });
 
   }
+  /*
   shouldComponentUpdate(nextStates) {
     return (nextStates.currentContent !== this.state.currentContent
          || nextStates.posts.length !== this.state.posts.length);
-  }
+  }*/
 
   handleChange(event) {
     
@@ -77,13 +82,13 @@ class App extends Component {
 
    
     const newInput = {
-      id: this.state.id ,
       date: getCurrentDate(),
       content: this.state.currentContent,
     };
 
     firebase.database().ref('/posts').push(newInput, response => response);
-  
+    //database().ref('/posts').push(newInput, response => response);
+
     this.setState({
       currentContent: '',
       //id: (this.state.id + 1),
