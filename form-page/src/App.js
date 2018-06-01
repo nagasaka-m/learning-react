@@ -3,11 +3,6 @@ import './App.css';
 import Posts from './components/Posts';
 import Form from './components/Form';
 import Header from './components/Header';
-//import firebase from 'firebase';
-import firebase from 'firebase/app';
-import database from 'firebase/database';
-
-import _ from 'lodash';
 
 function getCurrentDate(){
   var today = new Date();
@@ -19,59 +14,32 @@ function getCurrentDate(){
   return y + ' ' + m + '.' + d + ' ' + h + ':' + min;
 }
 
-class App extends React.PureComponent {
+class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      posts: [],
+      posts: [1,2],
       currentContent: '',
       id: 1,
     }
 
   }
   componentWillMount() {
-    firebase.initializeApp({  
-      // Initialize Firebase
-        apiKey: "AIzaSyD1dLuKPuVPCLdOPrwlfBoPMWZomXmUaGc",
-        authDomain: "blog-post-8113e.firebaseapp.com",
-        databaseURL: "https://blog-post-8113e.firebaseio.com",
-        projectId: "blog-post-8113e",
-        storageBucket: "blog-post-8113e.appspot.com",
-        messagingSenderId: "514646431420"
-
-    })
+    
   }
 
   
   componentDidMount(){
- //create database
-    firebase.database().ref('/posts')
-    //database().ref('/posts')
-    //get data from database as an js object
-    //.on updates us when new value gets added to database
-      .on('value', snapshot => {
-          const fbstore = snapshot.val();
-
-        const store = _.map(fbstore, (value, id) => {
-          return {
-            date: value.date,
-            content: value.content,
-          };
-        });
-        //setstate
-        this.setState({
-          posts: store.reverse(),
-        });
-      });
+ 
 
   }
-  /*
+
   shouldComponentUpdate(nextStates) {
     return (nextStates.currentContent !== this.state.currentContent
          || nextStates.posts.length !== this.state.posts.length);
-  }*/
+  }
 
   handleChange(event) {
     
@@ -81,27 +49,29 @@ class App extends React.PureComponent {
     if( this.state.currentContent !== ''){
 
    
+      /*
     const newInput = {
+      id: (this.state.id + 1),
       date: getCurrentDate(),
       content: this.state.currentContent,
-    };
-
-    firebase.database().ref('/posts').push(newInput, response => response);
-    //database().ref('/posts').push(newInput, response => response);
+    };*/
+    const newInput = this.state.posts.push(3);
+    
+    //insert to posts array
 
     this.setState({
       currentContent: '',
-      //id: (this.state.id + 1),
+      id: (this.state.id + 1),
+      posts: newInput
     });
   }else{
     alert("write a post");
   }
     event.preventDefault();
-
-   
   }
 
   render() {
+    /*
     return (
       <div className="App">
         <Header />
@@ -113,6 +83,19 @@ class App extends React.PureComponent {
         <Posts posts={this.state.posts} />
       </div>
     );
+
+    */
+   return (
+    <div className="App">
+      <Header />
+      <Form 
+        currentContent={this.state.currentContent}
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+      />
+      <p>{this.state.posts.length} </p>
+    </div>
+  );
   }
 }
 

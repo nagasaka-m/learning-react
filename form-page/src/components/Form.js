@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Form extends React.PureComponent{
+class Form extends React.Component{
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
