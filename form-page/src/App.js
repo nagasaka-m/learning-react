@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Map, List, fromJS } from 'immutable';
 import './App.css';
 import Posts from './components/Posts';
 import Form from './components/Form';
 import Header from './components/Header';
+
 
 function getCurrentDate(){
   var today = new Date();
@@ -20,7 +22,12 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      posts: [1,2],
+
+      posts: List([Map({
+        id: 1,
+        content: "heyyyy",
+        date: getCurrentDate()
+      })]),
       currentContent: '',
       id: 1,
     }
@@ -36,6 +43,7 @@ class App extends Component {
 
   }
 
+  
   shouldComponentUpdate(nextStates) {
     return (nextStates.currentContent !== this.state.currentContent
          || nextStates.posts.length !== this.state.posts.length);
@@ -48,21 +56,16 @@ class App extends Component {
   handleSubmit(event) {
     if( this.state.currentContent !== ''){
 
-   
-      /*
-    const newInput = {
-      id: (this.state.id + 1),
-      date: getCurrentDate(),
-      content: this.state.currentContent,
-    };*/
-    const newInput = this.state.posts.push(3);
-    
-    //insert to posts array
+   const newInput = Map({
+     id: this.state.id + 1,
+     content: this.state.currentContent,
+     date: getCurrentDate()
+   });
 
     this.setState({
       currentContent: '',
       id: (this.state.id + 1),
-      posts: newInput
+      posts: this.state.posts.push(newInput)
     });
   }else{
     alert("write a post");
@@ -71,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    /*
+    
     return (
       <div className="App">
         <Header />
@@ -80,22 +83,12 @@ class App extends Component {
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         />
-        <Posts posts={this.state.posts} />
+                <p>{this.state.posts.length} </p>
+
+        <Posts posts={this.state.posts.toJS()} />
+
       </div>
     );
-
-    */
-   return (
-    <div className="App">
-      <Header />
-      <Form 
-        currentContent={this.state.currentContent}
-        onChange={this.handleChange}
-        onSubmit={this.handleSubmit}
-      />
-      <p>{this.state.posts.length} </p>
-    </div>
-  );
   }
 }
 
