@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, List, fromJS } from 'immutable';
+import { Map, List } from 'immutable';
 import './App.css';
 import Posts from './components/Posts';
 import Form from './components/Form';
@@ -22,27 +22,12 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-
-      posts: List([Map({
-        id: 1,
-        content: "heyyyy",
-        date: getCurrentDate()
-      })]),
+      posts: List(),
       currentContent: '',
       id: 1,
     }
 
   }
-  componentWillMount() {
-    
-  }
-
-  
-  componentDidMount(){
- 
-
-  }
-
   
   shouldComponentUpdate(nextStates) {
     return (nextStates.currentContent !== this.state.currentContent
@@ -85,7 +70,7 @@ class App extends Component {
         />
                 <p>{this.state.posts.length} </p>
 
-        <Posts posts={this.state.posts.toJS()} />
+        <Posts posts={this.state.posts.toJS().reverse()} />
 
       </div>
     );

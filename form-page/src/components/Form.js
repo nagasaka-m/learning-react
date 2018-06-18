@@ -5,9 +5,7 @@ class Form extends React.Component{
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
-
     handleChange(event) {
         this.props.onChange(event);
     }
@@ -15,7 +13,7 @@ class Form extends React.Component{
         this.props.onSubmit(event);
     }
     render(){
-
+console.log("formmmm")
         return (
             <div className="row">
                 <div className='input-field'>
